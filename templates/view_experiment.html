@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ experiment.title }} - Entries</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="my-4">{{ experiment.title }}</h1>
+        <p>{{ experiment.description }}</p>
+
+        <h2>Entries</h2>
+        <ul class="list-group">
+            {% for entry in experiment.entries %}
+            <li class="list-group-item">
+                {{ entry.content }} - {{ entry.created_at.strftime('%Y-%m-%d %H:%M:%S') }}
+            </li>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ url_for('add_entry', experiment_id=experiment.id) }}" class="btn btn-success my-4">Add Entry</a>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Experiments</a>
+
+
+        <h2 class="mt-4">Summary</h2>
+        <form action="{{ url_for('view_experiment', experiment_id=experiment.id) }}" method="POST">
+            <button type="submit" class="btn btn-info my-2">Generate Summary</button>
+        </form>
+
+        {% if summary %}
+        <div class="alert alert-secondary mt-2">
+            <strong>Generated Summary:</strong>
+            <p>{{ summary }}</p>
+        </div>
+        {% endif %}
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiment Notebook</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="my-4">LLMを使用した電子実験ノート ver. 0.1</h1>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Creation Date</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for experiment in experiments %}
+                <tr>
+                    <td>{{ experiment.id }}</td>
+                    <td>{{ experiment.date.strftime('%Y-%m-%d') }}</td>
+                    <td><a href="{{ url_for('view_experiment', experiment_id=experiment.id) }}">{{ experiment.title
+                            }}</a></td>
+                    <td>{{ experiment.description }}</td>
+                    <td>
+                        <a href="{{ url_for('view_experiment', experiment_id=experiment.id) }}"
+                            class="btn btn-primary btn-sm">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('create_experiment') }}" class="btn btn-success my-4">Create New Experiment</a>
+    </div>
+</body>
+
+</html>

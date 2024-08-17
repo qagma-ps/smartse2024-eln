@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Entry</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="my-4">Add Entry to "{{ experiment.title }}"</h1>
+        <form action="{{ url_for('add_entry', experiment_id=experiment.id) }}" method="POST">
+            <div class="form-group">
+                <label for="content">Content:</label>
+                <textarea id="content" name="content" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Add Entry</button>
+        </form>
+        <a href="{{ url_for('view_experiment', experiment_id=experiment.id) }}" class="btn btn-secondary my-4">Back to
+            Entries</a>
+    </div>
+</body>
+
+</html>
