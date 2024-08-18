@@ -79,10 +79,16 @@ def summarize_experiment_content(content):
     template = PromptTemplate(
         input_variables=["text"],
         template="""
-            # Task
-            Summarize the following text and return summary in Japanese
-            # Text
-            {text}
+        # Task
+        Please summarize the following "experiment" using the format commonly used in the experimental section of a chemistry research paper as described in "output format".
+        If no information is provided, please describe as it is.
+        # Experiment
+        {text}
+        # Output Format
+        1. Materials and Methods: List the reagents, solvents, and equipment used in the experiment, including purity and suppliers.
+        2. Procedure: Describe the step-by-step procedure of the experiment, including reaction conditions, temperature, time, and pressure if applicable.
+        3. Measurements: Summarize the analytical techniques used for characterization (e.g., NMR, IR, GC-MS, HPLC).
+        4. Yields and Purification: Report the yields of the reactions and the purification methods used (e.g., recrystallization, extraction, distillation).
         """,
     )
     chain = LLMChain(llm=llm, prompt=template)
