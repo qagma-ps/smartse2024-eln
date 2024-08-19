@@ -1,0 +1,36 @@
+{
+    "protocol": [
+        {
+            "step": "Collect blood sample",
+            "parameters": {
+                "Volume": "20 mL"
+            }
+        },
+        {
+            "step": "Dilute blood with PBS",
+            "parameters": {
+                "PBS volume": "60 mL",
+                "Blood volume": "2 mL",
+                "Dilution": "Mix the blood gently with PBS in a 1:3 ratio"
+            }
+        },
+        {
+            "step": "Layer diluted blood over density gradient medium",
+            "instructions": "Carefully pipette the diluted blood on top of the density gradient medium to form a distinct layer without mixing the two fluids."
+        },
+        {
+            "step": "Centrifuge the tube",
+            "parameters": {
+                "Speed": "400 g",
+                "Time": "30 minutes",
+                "Temperature": "Room temperature"
+            }
+        },
+        {
+            "step": "Resuspend PBMCs in appropriate medium",
+            "parameters": {
+                "Medium volume": "10 mL"
+            }
+        }
+    ]
+}

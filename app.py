@@ -1,3 +1,4 @@
+import json
 import os
 
 from dotenv import load_dotenv
@@ -69,8 +70,14 @@ def view_experiment(experiment_id):
         entries_content = " ".join([entry.content for entry in experiment.entries])
         summary = summarize_experiment_content(entries_content)
 
+    # ローカルのJSONファイルからプロトコールデータを読み込む
+    experiment_protocol = load_experiment_protocol()
+
     return render_template(
-        "view_experiment.html", experiment=experiment, summary=summary
+        "view_experiment.html",
+        experiment=experiment,
+        summary=summary,
+        protocol=experiment_protocol,
     )
 
 
@@ -94,6 +101,12 @@ def summarize_experiment_content(content):
     chain = LLMChain(llm=llm, prompt=template)
     summary = chain.run(content)
     return summary
+
+
+def load_experiment_protocol():
+    with open("static/json/experiment_protocol.json", "r") as f:
+        protocol = json.load(f)
+    return protocol["protocol"]
 
 
 with app.app_context():

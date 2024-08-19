@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ experiment.title }} - Entries</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 </head>
 
 <body>
@@ -25,7 +26,7 @@
         <a href="{{ url_for('add_entry', experiment_id=experiment.id) }}" class="btn btn-success my-4">Add Entry</a>
         <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Experiments</a>
 
-
+        <!-- Summary作成と表示 -->
         <h2 class="mt-4">Summary</h2>
         <form action="{{ url_for('view_experiment', experiment_id=experiment.id) }}" method="POST">
             <button type="submit" class="btn btn-info my-2">Generate Summary</button>
@@ -38,7 +39,36 @@
         </div>
         {% endif %}
 
+        <!-- プロトコール表示 -->
+        <h2 class="mt-4">Experiment Protocol</h2>
+        <div class="protocol-steps">
+            {% for step in protocol %}
+            <div class="protocol-step">
+                <!-- ステップタイトルの表示 -->
+                <p class="step-title">Step {{ loop.index }}: {{ step['step'] }}</p>
+
+                <!-- パラメータの表示をタグ形式で -->
+                {% if step.parameters %}
+                <div>
+                    {% for param, value in step.parameters.items() %}
+                    <span class="badge badge-param">{{ param }}: {{ value }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- 指示の表示 -->
+                {% if step.instructions %}
+                <p>{{ step.instructions }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
     </div>
+
+    <!-- ローカルのJavaScriptファイルを参照 -->
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 </body>
 
 </html>
