@@ -10,17 +10,51 @@
 
 <body>
     <div class="container">
+        <!-- エントリーフォーム -->
         <h1 class="my-4">Add Entry to "{{ experiment.title }}"</h1>
-        <form action="{{ url_for('add_entry', experiment_id=experiment.id) }}" method="POST">
+        <form action="{{ url_for('add_entry', experiment_id=experiment.id) }}" method="POST"
+            enctype="multipart/form-data">
             <div class="form-group">
                 <label for="content">Content:</label>
                 <textarea id="content" name="content" class="form-control" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="file">Upload a file:</label>
+                <input type="file" name="file" id="file" class="form-control-file" accept="image/*"
+                    onchange="previewFile()">
+            </div>
+            <!-- サムネイルを表示するためのimgタグ -->
+            <div id="thumbnail-container">
+                <img id="thumbnail" class="thumbnail" src="" alt="No file selected">
             </div>
             <button type="submit" class="btn btn-success">Add Entry</button>
         </form>
         <a href="{{ url_for('view_experiment', experiment_id=experiment.id) }}" class="btn btn-secondary my-4">Back to
             Entries</a>
     </div>
+    <script>
+        // アップロードされたファイルをプレビューする関数
+        function previewFile() {
+            const file = document.getElementById('file').files[0];
+            const preview = document.getElementById('thumbnail');
+
+            // ファイルが選択されているか確認
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    // サムネイルを表示し、選択した画像のプレビューをセット
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';  // サムネイルを表示
+                };
+                reader.readAsDataURL(file);  // ファイルをDataURLとして読み込む
+            } else {
+                // ファイルが選択されていない場合の処理
+                preview.src = '';
+                preview.alt = 'No file selected';
+                preview.style.display = 'none';  // サムネイルを非表示
+            }
+        }
+    </script>
 </body>
 
 </html>

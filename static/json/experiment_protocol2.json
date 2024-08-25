@@ -1,0 +1,47 @@
+{
+    "protocol": [
+        {
+            "step": "Preparation of Hydrochloric Acid Solution",
+            "instructions": "5 ml of concentrated hydrochloric acid was diluted to 100 ml using a beaker (A)",
+            "parameters": {
+                "Reagent": [
+                    "Concentrated hydrochloric acid - 5 ml",
+                    "Purified water - 95 ml"
+                ],
+                "Container": "Beaker A"
+            }
+        },
+        {
+            "step": "Preparation of Sodium Hydroxide Solution",
+            "instructions": "Separately, 3 grams of sodium hydroxide was dissolved in purified water in a triangular flask (B) to prepare a 20 ml aqueous solution.",
+            "parameters": {
+                "Reagent": [
+                    "Sodium hydroxide - 3 grams",
+                    "Purified water - 20 ml"
+                ],
+                "Container": "Triangular flask B"
+            }
+        },
+        {
+            "step": "Indicator Addition",
+            "instructions": "One drop of phenolphthalein was added to the sodium hydroxide solution, resulting in a purple color.",
+            "parameters": {
+                "Reagent": [
+                    "Phenolphthalein - One drop"
+                ],
+                "Result": "turned to purple"
+            }
+        },
+        {
+            "step": "Titration",
+            "instructions": "The hydrochloric acid solution was then gradually added to the triangular flask (B) containing the sodium hydroxide solution until approximately 46 milliliters had been added, at which point the solution turned colorless.",
+            "parameters": {
+                "Reagent": [
+                    "Hydrochloric acid solution - 46 ml"
+                ],
+                "Container": "Triangular flask B",
+                "Result": "turned to colorless"
+            }
+        }
+    ]
+}

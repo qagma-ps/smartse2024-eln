@@ -1,4 +1,17 @@
-/* 左側の青い線を追加 */
+/* view_experiment.html*/
+/* description */
+.description-table {
+    width: 100%;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+}
+
+.description-table td {
+    padding: 10px;
+}
+
+/* Experiment Protocolの左側の青い線を追加 */
 .protocol-step {
     border-left: 5px solid #007bff;
     padding-left: 15px;
@@ -16,8 +29,52 @@
     font-size: 0.9em;
 }
 
+.reagent-param {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 12px;
+    margin: 5px;
+    display: inline-block;
+    font-size: 0.9em;
+}
+
+.container-param {
+    background-color: #6a00e2;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 12px;
+    margin: 5px;
+    display: inline-block;
+    font-size: 0.9em;
+}
+
 /* タイトルを太字にする */
 .step-title {
     font-weight: bold;
     font-size: 1.2em;
+}
+
+/* フラッシュメッセージフェードアウト */
+.fade-out {
+    transition: opacity 0.5s ease-out;
+    opacity: 0;
+}
+
+/* 実験記録削除ボタン */
+.delete-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+/* add_entry.html*/
+.thumbnail {
+    margin-top: 10px;
+    width: 200px;
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
+    display: none;
+    /* デフォルトでは表示しない */
 }
