@@ -1,0 +1,28 @@
+{
+    "protocol": [
+        {
+            "step": "title of the steps in experiment protocol",
+            "instructions": "detailed procedures",
+            "parameters": {
+                "Reagent": [
+                    "reagent used and quantity separated by '-' ",
+                    "Purified water - 95 ml"
+                ],
+                "Container": "container used in this step. If not used, please omit",
+                "Result": "result in this step. If not used, please omit"
+            }
+        },
+        {
+            "step": "title of the steps in experiment protocol",
+            "instructions": "detailed procedures",
+            "parameters": {
+                "Reagent": [
+                    "reagent used and quantity separated by '-' ",
+                    "Purified water - 95 ml"
+                ],
+                "Container": "container used in this step. If not used, please omit",
+                "Result": "result in this step. If not used, please omit"
+            }
+        }
+    ]
+}

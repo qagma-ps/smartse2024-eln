@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Experiment</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 </head>
 
 <body>
@@ -22,7 +23,9 @@
             </div>
             <button type="submit" class="btn btn-primary">Create Experiment</button>
         </form>
-        <a href="{{ url_for('index') }}" class="btn btn-secondary my-4">Back to Experiments</a>
+        <div class="navigation-buttons">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary my-4">Back to Experiments</a>
+        </div>
     </div>
 </body>
 

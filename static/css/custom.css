@@ -78,3 +78,93 @@
     display: none;
     /* デフォルトでは表示しない */
 }
+
+.text-preview {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    white-space: pre-wrap;
+    display: none;
+    /* デフォルトでは表示しない */
+}
+
+/*全体デザイン*/
+body {
+    background-color: #f0f4f8;
+    /* 優しいグレー/ブルー */
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #3b5998;
+    /* エレガントなブルー */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2d4373;
+    /* 濃いブルーでホバーフィードバック */
+}
+
+h1,
+h2 {
+    color: #2c3e50;
+    /* 落ち着いた見出し色 */
+}
+
+textarea {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    /* 優しい背景色 */
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.card h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+/* ナビゲーションボタン */
+.navigation-buttons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.navigation-buttons .btn {
+    margin-left: 10px;
+    background-color: #2d4373;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.navigation-buttons .btn:hover {
+    background-color: #3b5998;
+}

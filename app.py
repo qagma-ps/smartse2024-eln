@@ -1,10 +1,8 @@
 import io
 import os
 
-import markdown
 from dotenv import load_dotenv
 from flask import Flask, flash, redirect, render_template, request, send_file, url_for
-from googletrans import Translator
 from langsmith import Client
 from werkzeug.utils import secure_filename
 
@@ -13,7 +11,6 @@ from models import Entry, Experiment, File, db
 
 # .envファイルを読み込む
 load_dotenv()
-allowed_extensions = os.getenv("ALLOWED_EXTENSIONS")
 
 # LangSmithクライアントを初期化
 langsmith_client = Client()
@@ -49,7 +46,7 @@ def add_entry(experiment_id):
     if request.method == "POST":
         content = request.form["content"]
         # 入力されたテキストを翻訳
-        translated_content = translate_text_to_english(content)
+        translated_content = utils.translate_text_to_english(content)
         # 新しいエントリーを保存
         new_entry = Entry(
             content=content,
@@ -61,7 +58,7 @@ def add_entry(experiment_id):
         # ファイルのアップロード処理
         file = request.files["file"]
         if file:
-            if allowed_file(file.filename):
+            if utils.allowed_file(file.filename):
                 file_name = secure_filename(file.filename)
                 file_type = file.filename.rsplit(".", 1)[1].lower()
                 file_data = file.read()  # ファイルのバイナリデータを読み込む
@@ -83,18 +80,6 @@ def add_entry(experiment_id):
     return render_template("add_entry.html", experiment=experiment)
 
 
-# 英語への翻訳関数
-def translate_text_to_english(text):
-    translator = Translator()
-    result = translator.translate(text).text
-    return result
-
-
-# ファイルアップロード前拡張子確認関数
-def allowed_file(filename):
-    return "." in filename and filename.rsplit(".", 1)[1].lower() in allowed_extensions
-
-
 @app.route("/create_experiment", methods=["GET", "POST"])
 def create_experiment():
     if request.method == "POST":
@@ -111,25 +96,43 @@ def create_experiment():
 def view_experiment(experiment_id):
     experiment = Experiment.query.get_or_404(experiment_id)
 
-    summary = None
-    summary_html = None
+    summary = experiment.summary
+    protocol = experiment.protocol
+    protocol_step = protocol["protocol"] if protocol else None
     if request.method == "POST":
         # Entryの内容を結合して要約する
         entries_content = " ".join(
             [entry.translated_content for entry in experiment.entries]
         )
         summary = utils.summarize_experiment_content(entries_content)
-        summary_html = markdown.markdown(summary, output_format="xhtml")
+        # summary_html = markdown.markdown(summary, output_format="xhtml")
 
     # ローカルのJSONファイルからプロトコールデータを読み込む
-    experiment_protocol = utils.load_experiment_protocol()
+    # experiment_protocol = utils.load_experiment_protocol()
 
     return render_template(
         "view_experiment.html",
         experiment=experiment,
-        summary=summary_html,
-        protocol=experiment_protocol["protocol"],
+        summary=summary,
+        protocol=protocol_step,
     )
+
+
+@app.route("/structure_experiment_protocol/<int:experiment_id>", methods=["POST"])
+def structure_experiment_protocol(experiment_id):
+    experiment = Experiment.query.get_or_404(experiment_id)
+    summary = request.form.get("summary")
+
+    # summarize_experiment_procedure関数を呼び出してプロトコールを生成
+    protocol = utils.summarize_experiment_protocol(summary)
+
+    # ExperimentテーブルにSummaryとプロトコールJSONデータを保存
+    experiment.summary = summary
+    experiment.protocol = protocol
+    db.session.commit()
+
+    # view_experimentにリダイレクトし、プロトコールを表示
+    return redirect(url_for("view_experiment", experiment_id=experiment_id))
 
 
 @app.route("/download_file/<int:file_id>")

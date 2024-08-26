@@ -57,7 +57,9 @@
         </ul>
 
         <a href="{{ url_for('add_entry', experiment_id=experiment.id) }}" class="btn btn-success my-4">Add Entry</a>
-        <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Experiments</a>
+        <div class="navigation-buttons">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Experiments</a>
+        </div>
 
         <!-- Summary作成と表示 -->
         <h2 class="mt-4">Summary</h2>
@@ -67,13 +69,20 @@
 
         {% if summary %}
         <div class="alert alert-secondary mt-2">
-            <strong>Generated Summary:</strong>
-            <p>{{ summary | safe }}</p> <!-- markdownフィルタを使用してレンダリング -->
+            <form action="{{ url_for('structure_experiment_protocol', experiment_id=experiment.id) }}" method="POST">
+                <div class="form-group">
+                    <label for="summary">Summary Content:</label>
+                    <textarea id="summary" name="summary" class="form-control" rows="15">{{ summary }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Structure Protocol</button>
+            </form>
+            <!--<p>{{ summary | safe }}</p>  markdownフィルタを使用してレンダリング -->
         </div>
         {% endif %}
 
         <!-- プロトコール表示 -->
         <h2 class="mt-4">Experiment Protocol</h2>
+        {% if protocol %}
         <div class="protocol-steps">
             {% for step in protocol %}
             <div class="protocol-step">
@@ -107,6 +116,7 @@
             </div>
             {% endfor %}
         </div>
+        {% endif %}
     </div>
     <!-- JavaScriptでflashメッセージを一定時間後に消す -->
     <script>
@@ -129,7 +139,7 @@
     </form>
 
     <!-- ローカルのJavaScriptファイルを参照 -->
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.7.1.slim.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 </body>
 

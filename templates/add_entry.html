@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Entry</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
 </head>
 
 <body>
@@ -20,38 +21,57 @@
             </div>
             <div class="form-group">
                 <label for="file">Upload a file:</label>
-                <input type="file" name="file" id="file" class="form-control-file" accept="image/*"
+                <input type="file" name="file" id="file" class="form-control-file" accept=".pdf,.txt,image/*"
                     onchange="previewFile()">
             </div>
             <!-- サムネイルを表示するためのimgタグ -->
             <div id="thumbnail-container">
                 <img id="thumbnail" class="thumbnail" src="" alt="No file selected">
             </div>
+            <!-- テキストファイルのプレビュー -->
+            <div id="text-preview" class="text-preview"></div>
             <button type="submit" class="btn btn-success">Add Entry</button>
         </form>
-        <a href="{{ url_for('view_experiment', experiment_id=experiment.id) }}" class="btn btn-secondary my-4">Back to
-            Entries</a>
+        <div class="navigation-buttons">
+            <a href="{{ url_for('view_experiment', experiment_id=experiment.id) }}" class="btn btn-secondary my-4">Back
+                to Entries</a>
+        </div>
+
     </div>
     <script>
         // アップロードされたファイルをプレビューする関数
         function previewFile() {
             const file = document.getElementById('file').files[0];
             const preview = document.getElementById('thumbnail');
+            const textPreview = document.getElementById('text-preview');
 
-            // ファイルが選択されているか確認
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function (e) {
-                    // サムネイルを表示し、選択した画像のプレビューをセット
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';  // サムネイルを表示
-                };
-                reader.readAsDataURL(file);  // ファイルをDataURLとして読み込む
+
+                // ファイルのタイプを確認
+                if (file.type.startsWith('image/')) {
+                    // 画像ファイルの場合の処理
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';  // 画像プレビューを表示
+                        textPreview.style.display = 'none';  // テキストプレビューは非表示
+                    };
+                    reader.readAsDataURL(file);
+                } else if (file.type === 'text/plain') {
+                    // テキストファイルの場合の処理
+                    reader.onload = function (e) {
+                        textPreview.textContent = e.target.result;
+                        textPreview.style.display = 'block';  // テキストプレビューを表示
+                        preview.style.display = 'none';  // 画像プレビューは非表示
+                    };
+                    reader.readAsText(file);
+                }
             } else {
-                // ファイルが選択されていない場合の処理
+                // ファイルが選択されていない場合、プレビューを非表示に
                 preview.src = '';
-                preview.alt = 'No file selected';
-                preview.style.display = 'none';  // サムネイルを非表示
+                preview.style.display = 'none';
+                textPreview.textContent = '';
+                textPreview.style.display = 'none';
             }
         }
     </script>

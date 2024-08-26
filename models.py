@@ -12,6 +12,8 @@ class Experiment(db.Model):
     date = db.Column(
         db.DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
+    summary = db.Column(db.Text, nullable=True)  # Summaryを保存
+    protocol = db.Column(db.JSON, nullable=True)  # プロトコールのJSONデータを保存
     entries = db.relationship("Entry", backref="experiment", lazy=True)
 
 
